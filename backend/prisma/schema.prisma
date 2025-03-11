@@ -8,27 +8,28 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(uuid())
-  email         String    @unique
-  name          String?
-  provider      String    // "google" or "facebook"
-  providerId    String
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  posts         Post[]
+  id         String   @id @default(uuid())
+  email      String   @unique
+  name       String?
+  password   String?
+  provider   String?
+  providerId String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  posts      Post[]
 
   @@index([email])
 }
 
 model Post {
-  id          String    @id @default(uuid())
-  title       String
-  content     String
-  published   Boolean   @default(false)
-  authorId    String
-  author      User      @relation(fields: [authorId], references: [id])
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  published Boolean  @default(false)
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  author    User     @relation(fields: [authorId], references: [id])
 
   @@index([authorId])
 }
